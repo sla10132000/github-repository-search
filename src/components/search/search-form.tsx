@@ -32,6 +32,7 @@ export function SearchForm({ defaultValue, sort }: SearchFormProps) {
 
   function handleClear() {
     setQuery("")
+    router.push("/")
   }
 
   return (
