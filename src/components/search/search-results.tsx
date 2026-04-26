@@ -1,5 +1,5 @@
-import type { GitHubRepository } from "@/types/github"
 import { RepositoryCard } from "@/components/repository/repository-card"
+import type { GitHubRepository } from "@/types/github"
 
 interface SearchResultsProps {
   repositories: GitHubRepository[]
@@ -15,7 +15,7 @@ export function SearchResults({ repositories }: SearchResultsProps) {
   }
 
   return (
-    <ul className="space-y-3" role="list">
+    <ul className="space-y-3">
       {repositories.map((repo) => (
         <li key={repo.id}>
           <RepositoryCard repository={repo} />

@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { calcVisiblePages } from "@/lib/github"
-import { MAX_VISIBLE_PAGES } from "@/lib/constants"
 import { buttonVariants } from "@/components/ui/button"
+import { MAX_VISIBLE_PAGES } from "@/lib/constants"
+import { calcVisiblePages } from "@/lib/github"
 import { cn } from "@/lib/utils"
 
 interface PaginationProps {

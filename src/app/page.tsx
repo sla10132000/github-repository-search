@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
-import { searchRepositories } from "@/lib/github"
-import { PER_PAGE } from "@/lib/constants"
-import type { SortOption } from "@/types/github"
 import { Header } from "@/components/layout/header"
+import { TourGuide } from "@/components/onboarding/tour-guide"
+import { Pagination } from "@/components/pagination/pagination"
 import { SearchForm } from "@/components/search/search-form"
 import { SearchResults } from "@/components/search/search-results"
-import { SortSelect } from "@/components/search/sort-select"
-import { Pagination } from "@/components/pagination/pagination"
 import { SearchSuggestions } from "@/components/search/search-suggestions"
-import { TourGuide } from "@/components/onboarding/tour-guide"
+import { SortSelect } from "@/components/search/sort-select"
+import { PER_PAGE } from "@/lib/constants"
+import { searchRepositories } from "@/lib/github"
+import type { SortOption } from "@/types/github"
 
 interface PageProps {
   searchParams: Promise<{ q?: string; page?: string; sort?: string }>

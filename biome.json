@@ -11,10 +11,12 @@
       },
       "suspicious": {
         "noExplicitAny": "error",
-        "noConsole": "warn"
+        "noConsole": "warn",
+        "noShadowRestrictedNames": "off"
       },
       "style": {
-        "noNonNullAssertion": "warn"
+        "noNonNullAssertion": "warn",
+        "useNodejsImportProtocol": "off"
       }
     }
   },
@@ -32,6 +34,14 @@
     }
   },
   "files": {
-    "includes": ["**", "!**/.next", "!**/node_modules", "!**/dist"]
+    "includes": [
+      "**",
+      "!**/.next",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/globals.css"
+    ]
   }
 }

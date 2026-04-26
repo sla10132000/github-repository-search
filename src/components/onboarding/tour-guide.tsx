@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useCallback } from "react"
 import { driver } from "driver.js"
+import { useCallback, useEffect } from "react"
 import "driver.js/dist/driver.css"
 
 const TOUR_COMPLETED_KEY = "github-search-tour-completed"

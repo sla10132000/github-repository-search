@@ -1,14 +1,10 @@
-import {
-  DETAIL_REVALIDATE_SECONDS,
-  GITHUB_API_BASE_URL,
-  MAX_SEARCH_RESULTS,
-} from "./constants"
 import type {
   GitHubRepository,
   GitHubSearchResponse,
   PaginationInfo,
   SearchParams,
 } from "@/types/github"
+import { DETAIL_REVALIDATE_SECONDS, GITHUB_API_BASE_URL, MAX_SEARCH_RESULTS } from "./constants"
 
 /**
  * GitHub API リクエスト用の共通ヘッダーを生成
@@ -74,10 +70,9 @@ export async function searchRepositories(
     searchParams.set("order", "desc")
   }
 
-  const res = await fetchGitHub(
-    `${GITHUB_API_BASE_URL}/search/repositories?${searchParams}`,
-    { cache: "no-store" }
-  )
+  const res = await fetchGitHub(`${GITHUB_API_BASE_URL}/search/repositories?${searchParams}`, {
+    cache: "no-store",
+  })
 
   if (!res.ok) {
     if (res.status === 403) {

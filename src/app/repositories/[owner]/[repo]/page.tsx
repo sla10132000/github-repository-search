@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { getRepository } from "@/lib/github"
+import { notFound } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { RepositoryStats } from "@/components/repository/repository-stats"
 import { buttonVariants } from "@/components/ui/button"
+import { getRepository } from "@/lib/github"
 import { cn } from "@/lib/utils"
 
 interface PageProps {
@@ -31,15 +31,12 @@ function formatDate(dateString: string): string {
 export default async function RepositoryDetailPage({ params }: PageProps) {
   const { owner, repo } = await params
 
-  let repository
-  try {
-    repository = await getRepository(owner, repo)
-  } catch (error) {
+  const repository = await getRepository(owner, repo).catch((error: unknown) => {
     if (error instanceof Error && error.message === "REPOSITORY_NOT_FOUND") {
       notFound()
     }
     throw error
-  }
+  })
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
