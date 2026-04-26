@@ -19,12 +19,19 @@ export function Pagination({ currentPage, totalPages, query }: PaginationProps) 
     return `/?q=${encodeURIComponent(query)}&page=${page}`
   }
 
+  const linkStyle = cn(buttonVariants({ variant: "ghost", size: "sm" }))
+
   return (
     <nav className="flex justify-center items-center gap-1 mt-6" aria-label="ページネーション">
       {currentPage > 1 && (
-        <Link href={pageUrl(currentPage - 1)} className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
-          前へ
-        </Link>
+        <>
+          <Link href={pageUrl(1)} className={linkStyle} aria-label="最初のページへ">
+            «
+          </Link>
+          <Link href={pageUrl(currentPage - 1)} className={linkStyle}>
+            前へ
+          </Link>
+        </>
       )}
 
       {/* モバイルでは前へ/次へのみ、md以上でページ番号表示 */}
@@ -34,6 +41,7 @@ export function Pagination({ currentPage, totalPages, query }: PaginationProps) 
             <span
               key={page}
               className={cn(buttonVariants({ variant: "default", size: "sm" }))}
+              aria-current="page"
             >
               {page}
             </span>
@@ -55,9 +63,14 @@ export function Pagination({ currentPage, totalPages, query }: PaginationProps) 
       </span>
 
       {currentPage < totalPages && (
-        <Link href={pageUrl(currentPage + 1)} className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
-          次へ
-        </Link>
+        <>
+          <Link href={pageUrl(currentPage + 1)} className={linkStyle}>
+            次へ
+          </Link>
+          <Link href={pageUrl(totalPages)} className={linkStyle} aria-label="最後のページへ">
+            »
+          </Link>
+        </>
       )}
     </nav>
   )
