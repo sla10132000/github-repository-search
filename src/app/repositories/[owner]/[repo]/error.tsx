@@ -10,7 +10,7 @@ export default function Error({
   reset: () => void
 }) {
   return (
-    <div className="container mx-auto px-4 py-16 max-w-3xl text-center">
+    <div className="container mx-auto px-4 py-16 max-w-3xl text-center" role="alert">
       <h2 className="text-xl font-bold mb-4">エラーが発生しました</h2>
       <p className="text-muted-foreground mb-6">{error.message}</p>
       <Button onClick={reset}>再試行</Button>

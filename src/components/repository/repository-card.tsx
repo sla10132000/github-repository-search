@@ -9,7 +9,10 @@ interface RepositoryCardProps {
 
 export function RepositoryCard({ repository }: RepositoryCardProps) {
   return (
-    <Link href={`/repositories/${repository.owner.login}/${repository.name}`}>
+    <Link
+      href={`/repositories/${repository.owner.login}/${repository.name}`}
+      className="block rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+    >
       <Card className="cursor-pointer transition-all hover:bg-accent hover:shadow-md hover:border-foreground/20">
         <CardContent className="flex items-start gap-3 p-4">
           <Image
