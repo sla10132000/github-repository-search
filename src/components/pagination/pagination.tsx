@@ -10,13 +10,18 @@ interface PaginationProps {
   currentPage: number
   totalPages: number
   query: string
+  sort?: string
 }
 
-export function Pagination({ currentPage, totalPages, query }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, query, sort }: PaginationProps) {
   const visiblePages = calcVisiblePages(currentPage, totalPages, MAX_VISIBLE_PAGES)
 
   function pageUrl(page: number): string {
-    return `/?q=${encodeURIComponent(query)}&page=${page}`
+    const params = new URLSearchParams({ q: query, page: String(page) })
+    if (sort && sort !== "best-match") {
+      params.set("sort", sort)
+    }
+    return `/?${params}`
   }
 
   const linkStyle = cn(buttonVariants({ variant: "ghost", size: "sm" }))

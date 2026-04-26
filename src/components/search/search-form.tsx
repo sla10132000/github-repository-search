@@ -7,9 +7,10 @@ import { Input } from "@/components/ui/input"
 
 interface SearchFormProps {
   defaultValue: string
+  sort?: string
 }
 
-export function SearchForm({ defaultValue }: SearchFormProps) {
+export function SearchForm({ defaultValue, sort }: SearchFormProps) {
   const router = useRouter()
   const [query, setQuery] = useState(defaultValue)
   const [isPending, startTransition] = useTransition()
@@ -19,8 +20,12 @@ export function SearchForm({ defaultValue }: SearchFormProps) {
     const trimmed = query.trim()
     if (!trimmed) return
 
+    const params = new URLSearchParams({ q: trimmed, page: "1" })
+    if (sort && sort !== "best-match") {
+      params.set("sort", sort)
+    }
     startTransition(() => {
-      router.push(`/?q=${encodeURIComponent(trimmed)}&page=1`)
+      router.push(`/?${params}`)
     })
   }
 

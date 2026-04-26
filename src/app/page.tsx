@@ -61,7 +61,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <Header />
-      <SearchForm defaultValue={query} />
+      <SearchForm defaultValue={query} sort={currentSort} />
 
       <div className="flex items-center justify-between mt-4 mb-4">
         <p className="text-sm text-muted-foreground">
@@ -76,6 +76,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
           query={query}
+          sort={currentSort}
         />
       )}
 
@@ -86,6 +87,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
           query={query}
+          sort={currentSort}
         />
       )}
     </div>
