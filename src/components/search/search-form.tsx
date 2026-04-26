@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { type FormEvent, useState, useTransition } from "react"
+import { type FormEvent, useEffect, useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -14,6 +14,10 @@ export function SearchForm({ defaultValue, sort }: SearchFormProps) {
   const router = useRouter()
   const [query, setQuery] = useState(defaultValue)
   const [isPending, startTransition] = useTransition()
+
+  useEffect(() => {
+    setQuery(defaultValue)
+  }, [defaultValue])
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
