@@ -2,8 +2,11 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Image from "next/image"
 import { getRepository } from "@/lib/github"
+import Link from "next/link"
 import { Header } from "@/components/layout/header"
 import { RepositoryStats } from "@/components/repository/repository-stats"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 interface PageProps {
   params: Promise<{ owner: string; repo: string }>
@@ -60,6 +63,17 @@ export default async function RepositoryDetailPage({ params }: PageProps) {
         forks={repository.forks_count}
         issues={repository.open_issues_count}
       />
+
+      <div className="mt-6">
+        <Link
+          href={repository.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(buttonVariants({ variant: "outline" }))}
+        >
+          GitHub で見る ↗
+        </Link>
+      </div>
     </div>
   )
 }

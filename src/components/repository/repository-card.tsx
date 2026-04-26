@@ -10,18 +10,23 @@ interface RepositoryCardProps {
 export function RepositoryCard({ repository }: RepositoryCardProps) {
   return (
     <Link href={`/repositories/${repository.owner.login}/${repository.name}`}>
-      <Card className="hover:bg-accent transition-colors">
-        <CardContent className="flex items-center gap-3 p-4">
+      <Card className="cursor-pointer transition-all hover:bg-accent hover:shadow-md hover:border-foreground/20">
+        <CardContent className="flex items-start gap-3 p-4">
           <Image
             src={repository.owner.avatar_url}
             alt={`${repository.owner.login} のアバター`}
             width={40}
             height={40}
-            className="rounded-full"
+            className="rounded-full mt-0.5"
           />
           <div className="min-w-0 flex-1">
             <p className="font-medium truncate">{repository.full_name}</p>
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+            {repository.description && (
+              <p className="text-sm text-muted-foreground truncate mt-0.5">
+                {repository.description}
+              </p>
+            )}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
               <span>★ {repository.stargazers_count.toLocaleString()}</span>
               {repository.language && <span>{repository.language}</span>}
             </div>

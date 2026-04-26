@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/header"
 import { SearchForm } from "@/components/search/search-form"
 import { SearchResults } from "@/components/search/search-results"
 import { Pagination } from "@/components/pagination/pagination"
+import { SearchSuggestions } from "@/components/search/search-suggestions"
 
 interface PageProps {
   searchParams: Promise<{ q?: string; page?: string }>
@@ -31,9 +32,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <Header />
         <SearchForm defaultValue="" />
-        <p className="text-muted-foreground mt-8 text-center">
-          キーワードを入力してリポジトリを検索してください
-        </p>
+        <SearchSuggestions />
       </div>
     )
   }
