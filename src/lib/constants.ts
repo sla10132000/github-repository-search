@@ -2,7 +2,7 @@
 export const GITHUB_API_BASE_URL = "https://api.github.com"
 
 /** 1ページあたりの表示件数 */
-export const PER_PAGE = 30
+export const PER_PAGE = 20
 
 /** GitHub 検索 API の最大取得件数（API 制限） */
 export const MAX_SEARCH_RESULTS = 1000

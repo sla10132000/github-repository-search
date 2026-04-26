@@ -1,14 +1,25 @@
 import type { Metadata } from "next"
 import { searchRepositories } from "@/lib/github"
 import { PER_PAGE } from "@/lib/constants"
+import type { SortOption } from "@/types/github"
 import { Header } from "@/components/layout/header"
 import { SearchForm } from "@/components/search/search-form"
 import { SearchResults } from "@/components/search/search-results"
+import { SortSelect } from "@/components/search/sort-select"
 import { Pagination } from "@/components/pagination/pagination"
 import { SearchSuggestions } from "@/components/search/search-suggestions"
 
 interface PageProps {
-  searchParams: Promise<{ q?: string; page?: string }>
+  searchParams: Promise<{ q?: string; page?: string; sort?: string }>
+}
+
+const validSorts: SortOption[] = ["best-match", "stars", "updated"]
+
+function parseSortOption(sort?: string): SortOption {
+  if (sort && validSorts.includes(sort as SortOption)) {
+    return sort as SortOption
+  }
+  return "best-match"
 }
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
@@ -23,9 +34,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 }
 
 export default async function SearchPage({ searchParams }: PageProps) {
-  const { q, page } = await searchParams
+  const { q, page, sort } = await searchParams
   const query = q?.trim() ?? ""
   const currentPage = Math.max(1, Number(page) || 1)
+  const currentSort = parseSortOption(sort)
 
   if (!query) {
     return (
@@ -41,6 +53,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
     q: query,
     page: currentPage,
     per_page: PER_PAGE,
+    sort: currentSort,
   })
 
   return (
@@ -53,6 +66,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
           検索結果: {pagination.totalCount.toLocaleString()} 件
           {pagination.totalCount > 1000 && "（最大 1,000 件まで表示可能）"}
         </p>
+        <SortSelect currentSort={currentSort} query={query} />
       </div>
 
       {pagination.totalPages >= 5 && (

@@ -17,6 +17,11 @@ export interface GitHubRepository {
   forks_count: number
   open_issues_count: number
   html_url: string
+  created_at: string
+  updated_at: string
+  topics: string[]
+  homepage: string | null
+  license: { name: string } | null
 }
 
 /** GitHub 検索 API レスポンス */
@@ -26,11 +31,15 @@ export interface GitHubSearchResponse {
   items: GitHubRepository[]
 }
 
+/** ソート順 */
+export type SortOption = "best-match" | "stars" | "updated"
+
 /** 検索パラメータ */
 export interface SearchParams {
   q: string
   page: number
   per_page: number
+  sort?: SortOption
 }
 
 /** ページネーション情報 */
