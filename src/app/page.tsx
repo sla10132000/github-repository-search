@@ -49,10 +49,20 @@ export default async function SearchPage({ searchParams }: PageProps) {
       <Header />
       <SearchForm defaultValue={query} />
 
-      <p className="text-sm text-muted-foreground mt-4 mb-4">
-        検索結果: {pagination.totalCount.toLocaleString()} 件
-        {pagination.totalCount > 1000 && "（最大 1,000 件まで表示可能）"}
-      </p>
+      <div className="flex items-center justify-between mt-4 mb-4">
+        <p className="text-sm text-muted-foreground">
+          検索結果: {pagination.totalCount.toLocaleString()} 件
+          {pagination.totalCount > 1000 && "（最大 1,000 件まで表示可能）"}
+        </p>
+      </div>
+
+      {pagination.totalPages >= 5 && (
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          query={query}
+        />
+      )}
 
       <SearchResults repositories={repositories} />
 
