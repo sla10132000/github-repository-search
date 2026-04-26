@@ -38,6 +38,7 @@ export function SearchForm({ defaultValue }: SearchFormProps) {
           placeholder="リポジトリ名を入力してください（Enter で検索）"
           aria-label="検索キーワード"
           className="flex-1 pr-8"
+          data-tour="search-input"
         />
         {query && (
           <button
@@ -50,7 +51,7 @@ export function SearchForm({ defaultValue }: SearchFormProps) {
           </button>
         )}
       </div>
-      <Button type="submit" disabled={!query.trim() || isPending}>
+      <Button type="submit" disabled={!query.trim() || isPending} data-tour="search-button">
         {isPending ? (
           <span className="flex items-center gap-1.5">
             <span className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />

@@ -12,7 +12,7 @@ export function SearchSuggestions() {
   }
 
   return (
-    <div className="mt-8 text-center">
+    <div className="mt-8 text-center" data-tour="suggestions">
       <p className="text-muted-foreground mb-3">例えばこんなキーワードで検索:</p>
       <div className="flex flex-wrap justify-center gap-2">
         {suggestions.map((keyword) => (

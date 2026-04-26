@@ -8,6 +8,7 @@ import { SearchResults } from "@/components/search/search-results"
 import { SortSelect } from "@/components/search/sort-select"
 import { Pagination } from "@/components/pagination/pagination"
 import { SearchSuggestions } from "@/components/search/search-suggestions"
+import { TourGuide } from "@/components/onboarding/tour-guide"
 
 interface PageProps {
   searchParams: Promise<{ q?: string; page?: string; sort?: string }>
@@ -45,6 +46,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
         <Header />
         <SearchForm defaultValue="" />
         <SearchSuggestions />
+        <TourGuide />
       </div>
     )
   }
