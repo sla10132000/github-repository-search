@@ -51,6 +51,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
       <p className="text-sm text-muted-foreground mt-4 mb-4">
         検索結果: {pagination.totalCount.toLocaleString()} 件
+        {pagination.totalCount > 1000 && "（最大 1,000 件まで表示可能）"}
       </p>
 
       <SearchResults repositories={repositories} />
