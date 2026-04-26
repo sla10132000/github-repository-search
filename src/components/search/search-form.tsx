@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { type FormEvent, useEffect, useState, useTransition } from "react"
+import { type FormEvent, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -13,7 +13,6 @@ interface SearchFormProps {
 export function SearchForm({ defaultValue, sort }: SearchFormProps) {
   const router = useRouter()
   const [query, setQuery] = useState(defaultValue)
-  const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
     setQuery(defaultValue)
@@ -28,9 +27,7 @@ export function SearchForm({ defaultValue, sort }: SearchFormProps) {
     if (sort && sort !== "best-match") {
       params.set("sort", sort)
     }
-    startTransition(() => {
-      router.push(`/?${params}`)
-    })
+    router.push(`/?${params}`)
   }
 
   function handleClear() {
@@ -60,15 +57,8 @@ export function SearchForm({ defaultValue, sort }: SearchFormProps) {
           </button>
         )}
       </div>
-      <Button type="submit" disabled={!query.trim() || isPending} data-tour="search-button">
-        {isPending ? (
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-            検索中
-          </span>
-        ) : (
-          "検索"
-        )}
+      <Button type="submit" disabled={!query.trim()} data-tour="search-button">
+        検索
       </Button>
     </form>
   )
