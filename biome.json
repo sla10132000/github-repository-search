@@ -41,7 +41,8 @@
       "!**/dist",
       "!**/playwright-report",
       "!**/test-results",
-      "!**/globals.css"
+      "!**/globals.css",
+      "!**/next-env.d.ts"
     ]
   }
 }
