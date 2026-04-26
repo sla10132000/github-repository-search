@@ -67,7 +67,7 @@ export async function searchRepositories(
   })
   if (params.sort && params.sort !== "best-match") {
     searchParams.set("sort", params.sort)
-    searchParams.set("order", "desc")
+    searchParams.set("order", params.order ?? "desc")
   }
 
   const res = await fetchGitHub(`${GITHUB_API_BASE_URL}/search/repositories?${searchParams}`, {

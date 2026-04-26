@@ -8,19 +8,27 @@ import { SearchSuggestions } from "@/components/search/search-suggestions"
 import { SortSelect } from "@/components/search/sort-select"
 import { PER_PAGE } from "@/lib/constants"
 import { searchRepositories } from "@/lib/github"
-import type { SortOption } from "@/types/github"
+import type { OrderOption, SortOption } from "@/types/github"
 
 interface PageProps {
-  searchParams: Promise<{ q?: string; page?: string; sort?: string }>
+  searchParams: Promise<{ q?: string; page?: string; sort?: string; order?: string }>
 }
 
 const validSorts: SortOption[] = ["best-match", "stars", "updated"]
+const validOrders: OrderOption[] = ["desc", "asc"]
 
 function parseSortOption(sort?: string): SortOption {
   if (sort && validSorts.includes(sort as SortOption)) {
     return sort as SortOption
   }
   return "best-match"
+}
+
+function parseOrderOption(order?: string): OrderOption {
+  if (order && validOrders.includes(order as OrderOption)) {
+    return order as OrderOption
+  }
+  return "desc"
 }
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
@@ -35,10 +43,11 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 }
 
 export default async function SearchPage({ searchParams }: PageProps) {
-  const { q, page, sort } = await searchParams
+  const { q, page, sort, order } = await searchParams
   const query = q?.trim() ?? ""
   const currentPage = Math.max(1, Number(page) || 1)
   const currentSort = parseSortOption(sort)
+  const currentOrder = parseOrderOption(order)
 
   if (!query) {
     return (
@@ -56,6 +65,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
     page: currentPage,
     per_page: PER_PAGE,
     sort: currentSort,
+    order: currentOrder,
   })
 
   return (
@@ -68,7 +78,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
           検索結果: {pagination.totalCount.toLocaleString()} 件
           {pagination.totalCount > 1000 && "（最大 1,000 件まで表示可能）"}
         </p>
-        <SortSelect currentSort={currentSort} query={query} />
+        <SortSelect currentSort={currentSort} currentOrder={currentOrder} query={query} />
       </div>
 
       {pagination.totalPages >= 5 && (

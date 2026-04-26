@@ -34,12 +34,16 @@ export interface GitHubSearchResponse {
 /** ソート順 */
 export type SortOption = "best-match" | "stars" | "updated"
 
+/** 並び順 */
+export type OrderOption = "desc" | "asc"
+
 /** 検索パラメータ */
 export interface SearchParams {
   q: string
   page: number
   per_page: number
   sort?: SortOption
+  order?: OrderOption
 }
 
 /** ページネーション情報 */
