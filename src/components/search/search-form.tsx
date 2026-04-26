@@ -44,6 +44,7 @@ export function SearchForm({ defaultValue, sort }: SearchFormProps) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="リポジトリ名を入力してください（Enter で検索）"
           aria-label="検索キーワード"
+          maxLength={256}
           className="flex-1 pr-8"
           data-tour="search-input"
         />
