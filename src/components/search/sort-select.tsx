@@ -37,7 +37,7 @@ export function SortSelect({ currentSort, currentOrder, query }: SortSelectProps
         value={currentSort}
         onChange={handleSortChange}
         aria-label="並び替え"
-        className="rounded-lg border border-input bg-background px-2.5 py-1.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="rounded-lg border border-input bg-background px-2.5 py-2 text-base md:text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         {sortOptions.map((option) => (
           <option key={option.value} value={option.value}>
@@ -50,7 +50,7 @@ export function SortSelect({ currentSort, currentOrder, query }: SortSelectProps
           type="button"
           onClick={handleToggleOrder}
           aria-label={currentOrder === "desc" ? "昇順に変更" : "降順に変更"}
-          className="rounded-lg border border-input bg-background px-2 py-1.5 text-sm hover:bg-accent transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="rounded-lg border border-input bg-background px-2.5 py-2 text-base md:text-sm hover:bg-accent transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           title={currentOrder === "desc" ? "降順（大きい順）" : "昇順（小さい順）"}
         >
           {currentOrder === "desc" ? "↓" : "↑"}
