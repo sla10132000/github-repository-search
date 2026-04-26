@@ -1,13 +1,11 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import { Header } from "@/components/layout/header"
 import { TourGuide } from "@/components/onboarding/tour-guide"
-import { Pagination } from "@/components/pagination/pagination"
 import { SearchForm } from "@/components/search/search-form"
-import { SearchResults } from "@/components/search/search-results"
+import { SearchResultsContainer } from "@/components/search/search-results-container"
+import { SearchResultsSkeleton } from "@/components/search/search-results-skeleton"
 import { SearchSuggestions } from "@/components/search/search-suggestions"
-import { SortSelect } from "@/components/search/sort-select"
-import { PER_PAGE } from "@/lib/constants"
-import { searchRepositories } from "@/lib/github"
 import type { OrderOption, SortOption } from "@/types/github"
 
 interface PageProps {
@@ -60,46 +58,22 @@ export default async function SearchPage({ searchParams }: PageProps) {
     )
   }
 
-  const { repositories, pagination } = await searchRepositories({
-    q: query,
-    page: currentPage,
-    per_page: PER_PAGE,
-    sort: currentSort,
-    order: currentOrder,
-  })
+  // key を変えることで searchParams が変わるたびに Suspense が再トリガーされる
+  const suspenseKey = `${query}-${currentPage}-${currentSort}-${currentOrder}`
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <Header />
       <SearchForm defaultValue={query} sort={currentSort} />
 
-      <div className="flex items-center justify-between mt-4 mb-4">
-        <p className="text-sm text-muted-foreground">
-          検索結果: {pagination.totalCount.toLocaleString()} 件
-          {pagination.totalCount > 1000 && "（最大 1,000 件まで表示可能）"}
-        </p>
-        <SortSelect currentSort={currentSort} currentOrder={currentOrder} query={query} />
-      </div>
-
-      {pagination.totalPages >= 5 && (
-        <Pagination
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
+      <Suspense key={suspenseKey} fallback={<SearchResultsSkeleton />}>
+        <SearchResultsContainer
           query={query}
+          page={currentPage}
           sort={currentSort}
+          order={currentOrder}
         />
-      )}
-
-      <SearchResults repositories={repositories} />
-
-      {pagination.totalPages > 1 && (
-        <Pagination
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          query={query}
-          sort={currentSort}
-        />
-      )}
+      </Suspense>
     </div>
   )
 }
