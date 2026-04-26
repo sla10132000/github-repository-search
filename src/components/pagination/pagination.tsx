@@ -25,8 +25,8 @@ export function Pagination({ currentPage, totalPages, query }: PaginationProps) 
     <nav className="flex justify-center items-center gap-1 mt-6" aria-label="ページネーション">
       {currentPage > 1 && (
         <>
-          <Link href={pageUrl(1)} className={linkStyle} aria-label="最初のページへ">
-            «
+          <Link href={pageUrl(1)} className={linkStyle}>
+            最初
           </Link>
           <Link href={pageUrl(currentPage - 1)} className={linkStyle}>
             前へ
@@ -67,8 +67,8 @@ export function Pagination({ currentPage, totalPages, query }: PaginationProps) 
           <Link href={pageUrl(currentPage + 1)} className={linkStyle}>
             次へ
           </Link>
-          <Link href={pageUrl(totalPages)} className={linkStyle} aria-label="最後のページへ">
-            »
+          <Link href={pageUrl(totalPages)} className={linkStyle}>
+            最後
           </Link>
         </>
       )}
