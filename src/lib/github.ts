@@ -33,7 +33,7 @@ async function fetchGitHub(url: string, options?: RequestInit): Promise<Response
 /**
  * API レスポンスが検索結果の形式を満たしているか検証する
  */
-function isValidSearchResponse(data: unknown): data is GitHubSearchResponse {
+export function isValidSearchResponse(data: unknown): data is GitHubSearchResponse {
   if (typeof data !== "object" || data === null) return false
   const obj = data as Record<string, unknown>
   return typeof obj.total_count === "number" && Array.isArray(obj.items)
@@ -42,7 +42,7 @@ function isValidSearchResponse(data: unknown): data is GitHubSearchResponse {
 /**
  * API レスポンスがリポジトリの形式を満たしているか検証する
  */
-function isValidRepository(data: unknown): data is GitHubRepository {
+export function isValidRepository(data: unknown): data is GitHubRepository {
   if (typeof data !== "object" || data === null) return false
   const obj = data as Record<string, unknown>
   return (

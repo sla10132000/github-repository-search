@@ -1,5 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import { calcVisiblePages, getRepository, searchRepositories } from "@/lib/github"
+import {
+  calcVisiblePages,
+  getRepository,
+  isValidRepository,
+  isValidSearchResponse,
+  searchRepositories,
+} from "@/lib/github"
 
 const mockFetch = vi.fn()
 vi.stubGlobal("fetch", mockFetch)
@@ -128,5 +134,75 @@ describe("calcVisiblePages", () => {
 
   it("末尾付近では最後のページで終わるページを返す", () => {
     expect(calcVisiblePages(9, 10, 5)).toEqual([6, 7, 8, 9, 10])
+  })
+
+  it("totalPages が 1 の場合は [1] を返す", () => {
+    expect(calcVisiblePages(1, 1, 5)).toEqual([1])
+  })
+
+  it("maxVisible が 1 の場合は currentPage のみ返す", () => {
+    expect(calcVisiblePages(5, 10, 1)).toEqual([5])
+  })
+
+  it("totalPages と maxVisible が等しい場合は全ページを返す", () => {
+    expect(calcVisiblePages(3, 5, 5)).toEqual([1, 2, 3, 4, 5])
+  })
+
+  it("最終ページにいる場合は末尾で終わるウィンドウを返す", () => {
+    expect(calcVisiblePages(10, 10, 5)).toEqual([6, 7, 8, 9, 10])
+  })
+})
+
+describe("isValidSearchResponse", () => {
+  it("正常なレスポンスを受け入れる", () => {
+    expect(isValidSearchResponse({ total_count: 10, incomplete_results: false, items: [] })).toBe(
+      true
+    )
+  })
+
+  it("null を拒否する", () => {
+    expect(isValidSearchResponse(null)).toBe(false)
+  })
+
+  it("undefined を拒否する", () => {
+    expect(isValidSearchResponse(undefined)).toBe(false)
+  })
+
+  it("total_count が欠損している場合を拒否する", () => {
+    expect(isValidSearchResponse({ items: [] })).toBe(false)
+  })
+
+  it("items が配列でない場合を拒否する", () => {
+    expect(isValidSearchResponse({ total_count: 10, items: "not-array" })).toBe(false)
+  })
+
+  it("items が欠損している場合を拒否する", () => {
+    expect(isValidSearchResponse({ total_count: 10 })).toBe(false)
+  })
+})
+
+describe("isValidRepository", () => {
+  it("正常なリポジトリデータを受け入れる", () => {
+    expect(
+      isValidRepository({ id: 1, full_name: "octocat/Hello-World", owner: { login: "octocat" } })
+    ).toBe(true)
+  })
+
+  it("null を拒否する", () => {
+    expect(isValidRepository(null)).toBe(false)
+  })
+
+  it("id が文字列の場合を拒否する", () => {
+    expect(
+      isValidRepository({ id: "1", full_name: "octocat/Hello-World", owner: { login: "octocat" } })
+    ).toBe(false)
+  })
+
+  it("owner が null の場合を拒否する", () => {
+    expect(isValidRepository({ id: 1, full_name: "octocat/Hello-World", owner: null })).toBe(false)
+  })
+
+  it("full_name が欠損している場合を拒否する", () => {
+    expect(isValidRepository({ id: 1, owner: { login: "octocat" } })).toBe(false)
   })
 })

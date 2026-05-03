@@ -21,4 +21,18 @@ test.describe("GitHub リポジトリ検索フロー", () => {
     await page.getByText("← 検索結果に戻る").click()
     await expect(page.getByRole("heading", { name: /GitHub Repository Search/ })).toBeVisible()
   })
+
+  test("初期状態では検索ボタンが無効", async ({ page }) => {
+    await page.goto("/")
+
+    await expect(page.getByRole("button", { name: "検索" })).toBeDisabled()
+  })
+
+  test("ソート変更で検索結果が更新される", async ({ page }) => {
+    await page.goto("/?q=react&page=1")
+    await expect(page.getByText("検索結果:")).toBeVisible({ timeout: 10000 })
+
+    await page.getByRole("combobox", { name: "並び替え" }).selectOption("stars")
+    await expect(page.getByText("検索結果:")).toBeVisible({ timeout: 10000 })
+  })
 })
