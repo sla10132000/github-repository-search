@@ -4,7 +4,7 @@ GitHub のリポジトリを検索する Web アプリケーションです。
 
 ## デモ
 
-<!-- Vercel デプロイ後に URL を記載 -->
+https://github-repository-search-black.vercel.app/
 
 ## セットアップ
 
