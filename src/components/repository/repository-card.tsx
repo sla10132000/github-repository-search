@@ -32,6 +32,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
               <span>★ {repository.stargazers_count.toLocaleString()}</span>
               {repository.language && <span>{repository.language}</span>}
+              <span>更新: {new Date(repository.updated_at).toLocaleDateString("ja-JP")}</span>
             </div>
           </div>
         </CardContent>
